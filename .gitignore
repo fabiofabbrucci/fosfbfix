@@ -14,7 +14,7 @@ deps.lock
 nbproject/*
  
 # config files to ignore
-app/config/parameters.ini
+# app/config/parameters.ini
 
 # phpunit files to ignore
 app/phpunit.xml
