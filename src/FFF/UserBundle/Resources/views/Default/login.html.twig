@@ -7,7 +7,7 @@
         <h3><b>Sei un nuovo utente?</b></h3>
         <div style="text-align:center">
             <a href="{{ path('fos_user_registration_register') }}">
-                <img src="{{ asset('images/creaNuovoAccount.png') }}">
+                Register
             </a>
             <h5>
                 <span style="text-decoration: line-through;color: #B1B1B1;}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -24,25 +24,26 @@
             {{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
             {{ facebook_login_button({'autologoutlink': true}) }}
             
+            <script>
+                function goLogIn(){
+                    window.location = "{{ path('_security_check') }}";
+                }
+
+                function onFbInit() {
+                    if (typeof(FB) != 'undefined' && FB != null ) {
+                        FB.Event.subscribe('auth.statusChange', function(response) {
+                            if (response.session || response.authResponse) {
+                                setTimeout(goLogIn, 500);
+                            } else {
+                                window.location.href = "{{ path('_security_logout') }}";
+                            }
+                        });
+                    }
+                }
+            </script>
+            
             <hr  class="dotted"></div>
             <h3><b>Inserisci i tuoi dati:</b></h3><br/>
-            <script>
-            function goLogIn(){
-                window.location.href = "{{ path('_security_check') }}";
-            }
-
-            function onFbInit() {
-                if (typeof(FB) != 'undefined' && FB != null ) {
-                    FB.Event.subscribe('auth.statusChange', function(response) {
-                        if (response.session || response.authResponse) {
-                            setTimeout(goLogIn, 500);
-                        } else {
-                            window.location.href = "{{ path('_security_logout') }}";
-                        }
-                    });
-                }
-            }
-            </script>
 
             {% for key, message in app.session.getFlashes() %}
             <div class="{{ key }}">
