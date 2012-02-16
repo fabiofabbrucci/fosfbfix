@@ -13,6 +13,8 @@ security:
             id: fos_user.user_manager
         my_fos_facebook_provider:
             id: my.facebook.user
+        chainprovider:
+            providers: [fos_user_bundle, my_fos_facebook_provider]
 
     encoders: 
         FOS\UserBundle\Model\UserInterface: sha512
