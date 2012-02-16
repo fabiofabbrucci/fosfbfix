@@ -1,3 +1,12 @@
+services:
+    my.facebook.user:
+        class: FFF\UserBundle\Security\User\Provider\FacebookProvider
+        arguments:
+            facebook: "@fos_facebook.api"
+            userManager: "@fos_user.user_manager"
+            validator: "@validator"
+            container: "@service_container"
+
 security:
     providers:
         fos_user_bundle:
@@ -15,12 +24,12 @@ security:
                 provider: fos_user_bundle
                 csrf_provider: form.csrf_provider
             fos_facebook:
-                  app_url: "http://apps.facebook.com/abmundi/"
-                  server_url: "http://localhost/fosfbfix/web/app_dev.php/"
-                  login_path: ^/login
-                  check_path: ^/login_check$
-                  default_target_path: /
-                  provider: my_fos_facebook_provider
+                app_url: "http://apps.facebook.com/abmundi/"
+                server_url: "http://localhost/fosfbfix/web/app_dev.php/"
+                login_path: ^/login
+                check_path: ^/login_check$
+                default_target_path: /
+                provider: my_fos_facebook_provider
             logout: 
                   handlers: ["fos_facebook.logout_handler"]
             anonymous: true
