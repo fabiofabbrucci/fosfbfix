@@ -1,0 +1,73 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+        <div style="padding-left:20%;padding-right:20%;">
+
+        <h3><b>Sei un nuovo utente?</b></h3>
+        <div style="text-align:center">
+            <a href="{{ path('fos_user_registration_register') }}">
+                <img src="{{ asset('images/creaNuovoAccount.png') }}">
+            </a>
+            <h5>
+                <span style="text-decoration: line-through;color: #B1B1B1;}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                OPPURE 
+                <span style="text-decoration: line-through;color: #B1B1B1;}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </h5>
+        </div>
+        <h5>Entra con:</h5>
+        <div style="text-align:center">
+            <!--
+            <a href="{{ path('fos_user_security_login') }}"><img src="{{ asset('images/connectGoogle.png') }}"></a> 
+            -->
+            {{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
+            {{ facebook_login_button({'autologoutlink': true}) }}
+
+            <hr  class="dotted"></div>
+            <h3><b>Inserisci i tuoi dati:</b></h3><br/>
+            <script>
+            function goLogIn(){
+                window.location.href = "{{ path('_security_check') }}";
+            }
+
+            function onFbInit() {
+                if (typeof(FB) != 'undefined' && FB != null ) {
+                    FB.Event.subscribe('auth.statusChange', function(response) {
+                        if (response.session || response.authResponse) {
+                            setTimeout(goLogIn, 500);
+                        } else {
+                            window.location.href = "{{ path('_security_logout') }}";
+                        }
+                    });
+                }
+            }
+            </script>
+
+            {% for key, message in app.session.getFlashes() %}
+            <div class="{{ key }}">
+                {{ message|trans({}, 'FOSUserBundle') }}
+            </div>
+            {% endfor %}
+
+            {% if error %}
+                <div>{{ error }}</div>
+            {% endif %}
+
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                <h5><label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label><br/>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" size=30 /><p>
+
+                <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label><br/>
+                <input type="password" id="password" name="_password" size=30 /><p>
+
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label><p>
+
+                <input type="submit" id="_submit" name="_submit" value="Entra" />
+                </h5>
+            </form>
+
+            <a href="{{ path('fos_user_resetting_request') }}">Ops! Ho dimenticato la mia password.</a>
+        </div>
+
+{% endblock body %}
