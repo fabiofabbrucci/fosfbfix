@@ -20,9 +20,10 @@
             <!--
             <a href="{{ path('fos_user_security_login') }}"><img src="{{ asset('images/connectGoogle.png') }}"></a> 
             -->
+
             {{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
             {{ facebook_login_button({'autologoutlink': true}) }}
-
+            
             <hr  class="dotted"></div>
             <h3><b>Inserisci i tuoi dati:</b></h3><br/>
             <script>

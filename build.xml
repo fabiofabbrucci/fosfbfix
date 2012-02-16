@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="abmundi" default="build">
+    <!-- ============================================  -->
+    <!-- Target: install                               -->
+    <!-- ============================================  -->
+    <target name="install"
+            description="Prepare project after git clone">
+                
+        <echo msg="mkdir cache and logs" />
+        <mkdir dir="app/cache" />
+        <mkdir dir="app/logs" />
+        <echo msg="chmod 777 on cache and logs" />
+        <exec command="chmod -R 777 app/cache" />
+        <exec command="chmod -R 777 app/logs" />
+        <echo msg="setfacl on cache and logs" />
+        <exec command="chmod +x bin/java_wrapper" />
+        <exec command="setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs" />
+        <exec command="setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs" />
+        
+        <phingcall target="daily" />
+    </target>
+    
+    <target name="daily"
+            description="Run daily check">
+        <echo msg="Cache Test" />
+        <exec command="php app/console --env=test cache:clear" />
+        <echo msg="Build-Local" />
+    </target>
+</project>
