@@ -8,6 +8,9 @@ services:
             container: "@service_container"
 
 security:
+    factories:
+        - "%kernel.root_dir%/../vendor/bundles/FOS/FacebookBundle/Resources/config/security_factories.xml"
+        
     providers:
         fos_user_bundle:
             id: fos_user.user_manager
@@ -22,11 +25,6 @@ security:
     firewalls:
         public:
             pattern:    ^/
-            form_login:
-                csrf_provider: form.csrf_provider
-                login_path: /login
-                check_path: /login_check
-                provider: fos_user_bundle
             fos_facebook:
                 app_url: "http://apps.facebook.com/abmundi/"
                 server_url: "http://localhost/fosfbfix/web/app_dev.php/"
@@ -34,6 +32,11 @@ security:
                 check_path: /loginFb
                 default_target_path: /
                 provider: my_fos_facebook_provider
+            form_login:
+                csrf_provider: form.csrf_provider
+                login_path: /login
+                check_path: /login_check
+                provider: fos_user_bundle
             logout: true
             anonymous: true
 
