@@ -23,17 +23,18 @@ security:
         public:
             pattern:    ^/
             form_login:
-                provider: fos_user_bundle
                 csrf_provider: form.csrf_provider
+                login_path: /login
+                check_path: /login_check
+                provider: fos_user_bundle
             fos_facebook:
                 app_url: "http://apps.facebook.com/abmundi/"
                 server_url: "http://localhost/fosfbfix/web/app_dev.php/"
-                login_path: ^/login
-                check_path: ^/login_check$
+                login_path: /login
+                check_path: /loginFb
                 default_target_path: /
                 provider: my_fos_facebook_provider
-            logout: 
-                  handlers: ["fos_facebook.logout_handler"]
+            logout: true
             anonymous: true
 
         dev:
