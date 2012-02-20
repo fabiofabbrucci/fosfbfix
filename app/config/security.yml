@@ -26,8 +26,8 @@ security:
         public:
             pattern:    ^/
             fos_facebook:
-                app_url: "http://apps.facebook.com/abmundi/"
-                server_url: "http://localhost/fosfbfix/web/app_dev.php/"
+                app_url: "http://apps.facebook.com/fosfbfix/"
+                server_url: "http://fosfbfix.local.com/app_dev.php/"
                 login_path: /login
                 check_path: /loginFb
                 default_target_path: /
@@ -45,8 +45,8 @@ security:
             security: false
          
     access_control:
-        - { path: ^/.*, role: [IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/facebook/, role: [ROLE_FACEBOOK] }
+        - { path: ^/.*, role: [IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/secured/.*, role: [IS_AUTHENTICATED_FULLY] } # This is the route secured with fos_facebook
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }

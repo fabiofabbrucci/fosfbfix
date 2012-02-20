@@ -68,7 +68,7 @@ fos_user:
 fos_facebook:
     file:   %kernel.root_dir%/../vendor/facebook/src/base_facebook.php
     alias:  facebook
-    app_id: 282592128473572
-    secret: aa62ecb0b2230f95713a49db358f7aac
+    app_id: 286518428080443
+    secret: 40440388a99d52ae6f0c0dd8954dfd5b
     cookie: true
     permissions: [email, user_status, publish_stream, user_photos]
